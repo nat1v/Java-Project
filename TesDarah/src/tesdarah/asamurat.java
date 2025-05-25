@@ -38,55 +38,57 @@ public class asamurat extends TESdarah {
     }
 
     String kriteria() {
-
+    String hasilKriteria = "Kriteria tidak dapat ditentukan";
+            
         if (JK) {
             if (umur >= 10 && umur <= 18) {
                 if (nilai <= 5.5 && nilai >= 3.6) {
-                    System.out.println("normal");
+                    hasilKriteria = "normal";
                 } else {
-                    System.out.println("SG NORMAL BROO");
+                    hasilKriteria = "sg";
                 }
 
             } else if (umur >= 19 && umur <= 40) {
                 if (nilai <= 7.5 && nilai >= 2) {
-                    System.out.println("normal");
+                    hasilKriteria = "normal";
                 } else {
-                    System.out.println("SG VROOO");
+                    hasilKriteria = "sg";
                 }
             } else if (umur > 40) {
                 if (nilai >= 2 && nilai <= 8.5) {
-                    System.out.println("normal");
+                    hasilKriteria = "normal";
                 } else {
-                    System.out.println("SG VROOO");
+                    hasilKriteria = "sg";
                 }
             }
         } else {
             if (umur >= 19 && umur <= 40) {
                 if (nilai <= 6.5 && nilai >= 2) {
-                    System.out.println("normal");
+                    hasilKriteria = "normal";
                 } else {
-                    System.out.println("SG NORMAL BROO");
+                    hasilKriteria = "sg";
                 }
 
             } else if (umur > 40) {
                 if (nilai <= 8 && nilai >= 2) {
-                    System.out.println("normal");
+                    hasilKriteria = "normal";
                 } else {
-                    System.out.println("SG VROOO");
+                    hasilKriteria = "sg";
                 }
             } else if (umur >= 10 && umur <= 18) {
                 if (nilai >= 3.6 && nilai <= 4) {
-                    System.out.println("normal");
+                    hasilKriteria = "normal";
                 } else {
-                     System.out.println("SG VROOO");
+                    hasilKriteria = "sg";
                 }
             }
         }
-        return "Kriteria tidak diketahui";
+        return hasilKriteria;
     }
       
     public static void main(String[] args) {
-          
+          asamurat asam = new asamurat(12, 20);
+          System.out.println(asam.kriteria());
         }
 }
     

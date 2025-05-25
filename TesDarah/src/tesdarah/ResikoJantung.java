@@ -8,8 +8,8 @@ public class ResikoJantung extends TESdarah {
     ResikoJantung() {}
 
     // Konstruktor dengan parameter tanpa menggunakan this
-    ResikoJantung(String s, boolean b, int hdl, int ldl) {
-        super(s, b);
+    ResikoJantung(String GolDar, boolean JK, int hdl, int ldl) {
+        super(GolDar, JK);
         HDL = hdl;
         LDL = ldl;
         Total = HDL + LDL;
@@ -43,24 +43,28 @@ public class ResikoJantung extends TESdarah {
     @Override
     String kriteria() {
         String hasil = "";
+        
+        if(HDL < 0){
+            return "HDL tidak valid, rasio no itung itung";
+        }
 
         double rasioTotalHDL = (double) Total / HDL;
         double rasioLDLHDL = (double) LDL / HDL;
 
         if (rasioTotalHDL < 3.5) {
-            hasil += "Total/HDL     : Ideal\n";
-        } else if (rasioTotalHDL > 5) {
-            hasil += "Total/HDL     : Buruk\n";
+            hasil = "Ideal\n";
+        } else if (rasioTotalHDL > 5.0) {
+            hasil = "Buruk\n";
         } else {
-            hasil += "Total/HDL     : Baik\n";
+            hasil = "Baik\n";
         }
 
         if (rasioLDLHDL < 2) {
-            hasil += "LDL/HDL       : Ideal\n";
+            hasil = "Ideal\n";
         } else if (rasioLDLHDL > 5) {
-            hasil += "LDL/HDL       : Buruk\n";
+            hasil = "Buruk\n";
         } else {
-            hasil += "LDL/HDL       : Baik\n";
+            hasil = "Baik\n";
         }
 
         return hasil;
@@ -75,6 +79,7 @@ public class ResikoJantung extends TESdarah {
         System.out.println("Jenis Kelamin : " + (pasien.getJK() ? "Pria" : "Wanita"));
         System.out.println("HDL           : " + pasien.getHDL());
         System.out.println("LDL           : " + pasien.getLDL());
+        
         pasien.setTotal(); // hitung total
         System.out.println("Total Kolesterol: " + pasien.getTotal());
 

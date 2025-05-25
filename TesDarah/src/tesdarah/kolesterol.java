@@ -9,50 +9,81 @@ public class kolesterol extends TESdarah {
     kolesterol(){};
     
     kolesterol(String gol, boolean jk, int hdl, int ldl){
-        golongan = gol; JK = jk; HDL = hdl; LDL = ldl;
+        golongan = gol;
+        JK = jk; 
+        HDL = hdl; 
+        LDL = ldl;
     }
-    void setTotal(){total = HDL + LDL;}
-    int getTotal(){return total;}
-    void setHDL(int hdl){HDL = hdl;}
-    int getHDL(){return HDL;}
-    void setLDL(int ldl){LDL = ldl;}
-    int getLDL(){return LDL;}
-    
-    @Override String kriteria() {
+    void setTotal()
+    {
         total = HDL + LDL;
+    }
+    int getTotal()
+    {
+        return total;
+    }
+    void setHDL(int hdl)
+    {
+        HDL = hdl;
+    }
+    int getHDL()
+    {
+        return HDL;
+    }
+    void setLDL(int ldl)
+    {
+        LDL = ldl;
+    }
+    int getLDL(){
+        return LDL;}
+    
+@Override
+String kriteria() {
+    double total = HDL + LDL;
 
-        String totalStat = "";
-        String hdlStat = "";
-        String ldlStat = "";
+    String totalStat;
+    String hdlStat;
+    String ldlStat;
 
-        if (total < 200) {
-            totalStat = "BAIK";
-        } else if (total >= 200 && total < 240) {
-            totalStat = "PERBATASAN";
-        } else {
-            totalStat = "BAHAYA";
-        }
+    if (total < 0 || HDL < 0 || LDL < 0) {
+        return "Error: Nilai kolesterol tidak boleh negatif.";
+    }
 
-        if (HDL >= 60) {
-            hdlStat = "HDL Normal (>= 60)";
-        } else if (HDL >= 40) {
-            hdlStat = "HDL Cukup (40 - 59)";
-        } else {
-            hdlStat = "HDL Rendah (< 40)";
-        }
+    if (total < 200) {
+        totalStat = "BAIK";
+    } else if (total < 240) {
+        totalStat = "PERBATASAN";
+    } else {
+        totalStat = "BAHAYA";
+    }
+/*
+    if (HDL >= 60) {
+        hdlStat = "HDL Normal (>= 60 mg/dL)";
+    } else if (HDL >= 40) {
+        hdlStat = "HDL Cukup (40 - 59 mg/dL)";
+    } else {
+        hdlStat = "HDL Rendah (< 40 mg/dL)";
+    }
 
-        if (LDL < 130) {
-            ldlStat = "LDL Normal (< 130)";
-        } else if (LDL < 160) {
-            ldlStat = "LDL Cukup (130 - 159)";
-        } else {
-            ldlStat = "LDL Tinggi (>= 160)";
-        }
+    if (LDL < 100) {
+        ldlStat = "LDL Optimal (< 100 mg/dL)";
+    } else if (LDL < 130) {
+        ldlStat = "LDL Mendekati Optimal (100 - 129 mg/dL)";
+    } else if (LDL < 160) {
+        ldlStat = "LDL Batas Tinggi (130 - 159 mg/dL)";
+    } else if (LDL < 190) {
+        ldlStat = "LDL Tinggi (160 - 189 mg/dL)";
+    } else {
+        ldlStat = "LDL Sangat Tinggi (>= 190 mg/dL)";
+    }
 
-        return "Status Kolesterol: " + totalStat +
-               "\n" + hdlStat +
-               "\n" + ldlStat;
-    } 
+    return "Status Kolesterol Total: " + totalStat + " (" + String.format("%.0f", total) + " mg/dL)" +
+           "\nStatus HDL: " + hdlStat +
+           "\nStatus LDL: " + ldlStat;
+*/
+    return totalStat;
+}
+
    
     public static void main(String[] args) {
         kolesterol k1 = new kolesterol();

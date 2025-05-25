@@ -30,15 +30,28 @@ public class glukosa extends TESdarah {
     }
 
     String kriteria() {
+        String hasilGlukosa = "";
         if (puasa) {
-            if (nilai < 110) return "Bukan diabetes";
-            else if (nilai <= 125) return "Pra diabetes";
-            else return "Diabetes";
+            
+            if (nilai < 110){
+                hasilGlukosa = "Bukan Diabetes";
+            }
+            else if (nilai <= 125){
+                hasilGlukosa = "Pra diabetes";
+            }
+            else hasilGlukosa = "Diabetes";
+        
         } else {
-            if (nilai < 140) return "Bukan diabetes";
-            else if (nilai <= 199) return "Pra diabetes";
-            else return "Diabetes";
+            
+            if (nilai < 140){ 
+                hasilGlukosa = "Bukan diabetes";
+            }
+            else if (nilai <= 199){
+                hasilGlukosa =  "Pra diabetes";
+            }
+            else hasilGlukosa = "Diabetes";
         }
+        return hasilGlukosa;
     }
     
     public static void main(String[] args) {
@@ -49,12 +62,6 @@ public class glukosa extends TESdarah {
         System.out.println(g1.getNilai());
         System.out.println(g1.kriteria());
 
-        glukosa g2 = new glukosa("AB", true, 125, false);
-        System.out.println(g2.getGol());
-        System.out.println(g2.getJK() ? "laki-laki":"perempuan");
-        System.out.println(g2.getPuasa() ? "Puasa":"Tidak puasa");
-        System.out.println(g2.getNilai());
-        System.out.println(g2.kriteria());
         }
 }
 

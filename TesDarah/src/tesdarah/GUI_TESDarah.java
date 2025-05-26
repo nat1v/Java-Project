@@ -3,13 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package tesdarah;
-import asamurat.java;
-import ResikoJantung.java;
-import glukosa.java;
+
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import kolesterol.java;
-import tensi.java;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author 0xr00t
@@ -35,6 +35,7 @@ public class GUI_TESDarah extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         nama_user = new javax.swing.JTextField();
@@ -61,9 +62,23 @@ public class GUI_TESDarah extends javax.swing.JFrame {
         ldl_user = new javax.swing.JTextField();
         kol_tot = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        hasil_user = new javax.swing.JLabel();
         total_kol_user1 = new javax.swing.JLabel();
         tanggalMCU = new com.toedter.calendar.JDateChooser();
+        jLabel13 = new javax.swing.JLabel();
+        tanggalLahir_user = new com.toedter.calendar.JDateChooser();
+        label_HasilTD = new javax.swing.JLabel();
+        label_HasilAU = new javax.swing.JLabel();
+        label_HasilGD = new javax.swing.JLabel();
+        label_HasilK = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabel_User = new javax.swing.JTable();
+        label_HasilRJ = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        cekJantung = new javax.swing.JButton();
+        cekKolesterol = new javax.swing.JButton();
+        cekGlukosa = new javax.swing.JButton();
+        cekTensi = new javax.swing.JButton();
+        hasil_individual = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tes Darah");
@@ -98,11 +113,11 @@ public class GUI_TESDarah extends javax.swing.JFrame {
 
         isperempuan_user.setText("Perempuan");
 
-        jLabel6.setText("Tensi");
+        jLabel6.setText("Tekanan Darah");
 
-        jLabel7.setText("sistol");
+        jLabel7.setText("Sistol");
 
-        jLabel8.setText("diastol");
+        jLabel8.setText("Diastol");
 
         diastol_user.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,16 +166,88 @@ public class GUI_TESDarah extends javax.swing.JFrame {
 
         kol_tot.setText("Kolesterol Total: ");
 
-        jButton1.setText("Hasil");
+        jButton1.setText("Hasil/Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        hasil_user.setText("kriterria hasil");
-
         total_kol_user1.setText("....");
+
+        jLabel13.setText("Tanggal Lahir");
+
+        label_HasilTD.setText("Tekanan Darah:");
+
+        label_HasilAU.setText("Hasil Asam Urat:");
+
+        label_HasilGD.setText("Hasil Gula Darah:");
+
+        label_HasilK.setText("Kolesterol:");
+
+        tabel_User.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Tanggal", "Nama", "Umur", "Golongan", "Tanggal Lahir", "Tekanan.D", "Asam Urat", "Gula Darah", "Resiko Jantung", "Kolesterol"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tabel_User);
+
+        label_HasilRJ.setText("Resiko Jantung:");
+
+        jButton2.setText("Hapus Data");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        cekJantung.setText("Cek Jantung");
+        cekJantung.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cekJantungActionPerformed(evt);
+            }
+        });
+
+        cekKolesterol.setText("Cek Kolesterol");
+        cekKolesterol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cekKolesterolActionPerformed(evt);
+            }
+        });
+
+        cekGlukosa.setText("Gula Darah");
+        cekGlukosa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cekGlukosaActionPerformed(evt);
+            }
+        });
+
+        cekTensi.setText("Cek Tensi");
+        cekTensi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cekTensiActionPerformed(evt);
+            }
+        });
+
+        hasil_individual.setText("...");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -168,7 +255,23 @@ public class GUI_TESDarah extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1)
+                            .addComponent(kol_tot)
+                            .addComponent(cekJantung)
+                            .addComponent(cekGlukosa))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(total_kol_user1)
+                            .addComponent(jButton2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cekKolesterol)
+                                    .addComponent(cekTensi))
+                                .addGap(93, 93, 93)
+                                .addComponent(hasil_individual))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -177,119 +280,150 @@ public class GUI_TESDarah extends javax.swing.JFrame {
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel10)
                                     .addComponent(jLabel11)
-                                    .addComponent(jLabel12))
+                                    .addComponent(jLabel12)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel7)
+                                        .addComponent(jLabel8)))
+                                .addGap(35, 35, 35)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(sistol_user, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(isPuasa_user)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(34, 34, 34)
-                                        .addComponent(jLabel8))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(asamur_user, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                                            .addComponent(gula_user)
-                                            .addComponent(hdl_user)
-                                            .addComponent(ldl_user)))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton1)
-                                    .addComponent(kol_tot))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(114, 114, 114)
-                                        .addComponent(hasil_user))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(total_kol_user1))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(37, 37, 37)
-                                .addComponent(islaki_user)
-                                .addGap(43, 43, 43)
-                                .addComponent(isperempuan_user))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(diastol_user, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(asamur_user, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(gula_user, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(hdl_user, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(ldl_user, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(59, 59, 59)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(label_HasilK)
+                                            .addComponent(label_HasilGD)
+                                            .addComponent(label_HasilAU)
+                                            .addComponent(label_HasilTD)
+                                            .addComponent(label_HasilRJ)))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel13)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel2))
+                                    .addComponent(jLabel5)
                                     .addComponent(jLabel4))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(gol_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nama_user, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                                    .addComponent(umur_user, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(tanggalMCU, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addContainerGap(505, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(diastol_user, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(sistol_user, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(519, 519, 519))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(isPuasa_user)
-                .addGap(339, 339, 339))
+                                .addGap(32, 32, 32)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(gol_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(nama_user, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                                        .addComponent(umur_user, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(tanggalMCU, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(tanggalLahir_user, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(islaki_user)
+                                        .addGap(34, 34, 34)
+                                        .addComponent(isperempuan_user)))))
+                        .addGap(27, 27, 27)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(163, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(tanggalMCU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(1, 1, 1)
-                .addComponent(isPuasa_user)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(nama_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(umur_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(gol_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(islaki_user)
-                    .addComponent(isperempuan_user))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(diastol_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sistol_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(asamur_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(gula_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(hdl_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ldl_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(tanggalMCU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nama_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(37, 37, 37)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(umur_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(tanggalLahir_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(22, 22, 22))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addGap(18, 18, 18)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(gol_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(islaki_user)
+                            .addComponent(isperempuan_user))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(isPuasa_user)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(diastol_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(sistol_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(label_HasilTD)
+                                .addGap(35, 35, 35)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(asamur_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_HasilAU))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(gula_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_HasilGD))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(hdl_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_HasilRJ))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ldl_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_HasilK)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(kol_tot)
                     .addComponent(total_kol_user1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cekJantung)
+                            .addComponent(cekKolesterol))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cekGlukosa)
+                            .addComponent(cekTensi)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(hasil_individual)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(hasil_user))
+                    .addComponent(jButton2))
                 .addGap(24, 24, 24))
         );
 
@@ -334,28 +468,25 @@ public class GUI_TESDarah extends javax.swing.JFrame {
         String nama = nama_user.getText();
         int umur = Integer.parseInt(umur_user.getText());
         String GolDar = gol_user.getSelectedItem().toString();
-       
+        
         
         boolean isLaki = islaki_user.isSelected();
         boolean isPuasa = isPuasa_user.isSelected();
         
-        /*if (islaki_user.isSelected()) {
-        String laki = islaki_user.getText();
-        } else if (isperempuan_user.isSelected()) {
-        String perempuan = isperempuan_user.getText();
-        }*/
-        
+        DefaultTableModel model = (javax.swing.table.DefaultTableModel) tabel_User.getModel();
         Date tanggalDipilih = tanggalMCU.getDate();
-         // Define the desired date format
-        // Common formats:
+        Date tglLahir_user = tanggalLahir_user.getDate();
+        
+        // format formats:
         // "yyyy-MM-dd" -> 2025-05-24 (Good for databases, international standard)
         // "dd-MM-yyyy" -> 24-05-2025 (Common in many regions)
         // "dd/MM/yyyy" -> 24/05/2025
         // "MM/dd/yyyy" -> 05/24/2025 (Common in the US)
-        // "EEEE, dd MMMM yyyy" -> Sabtu, 24 Mei 2025 (Full day name, month name in Indonesian - if locale is set)
+        // "EEEE, dd MMMM yyyy" -> Sabtu, 10 januari 2025 (Full day name, month name in Indonesian - if locale is set)
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Choose your preferred format
-        String dateString = sdf.format(tanggalDipilih);
+        String tanggalMCU_USER = sdf.format(tanggalDipilih);
+        String tglLahir_USER = sdf.format(tglLahir_user);
         
         
         int diastol = Integer.parseInt(diastol_user.getText());
@@ -383,21 +514,176 @@ public class GUI_TESDarah extends javax.swing.JFrame {
         
         kolesterol dataKolesterol = new kolesterol(GolDar, isLaki, HDL_user, LDL_user);
         String hasilKolesterol = dataKolesterol.kriteria();
+        dataKolesterol.setTotal();
+        String totalKol = Integer.toString(dataKolesterol.getTotal());
                 
-        String combinedHasil = hasilAsamUrat + " " + hasilGlukosa + " " + hasilTensi + " " + hasilResikoJantung + " " + hasilKolesterol;
+//        String combinedHasil = "Hasil asam Urat: " + hasilAsamUrat + "\nHasil Gula Darah: " + hasilGlukosa + "\n Hasil Tensi: " + hasilTensi + "\n Resiko Jantung: " + hasilResikoJantung + "\nHasil Kolesterol:  " + hasilKolesterol;
         
-        hasil_user.setText(combinedHasil);
+        
+        label_HasilAU.setText("Hasil Asam Urat: " + hasilAsamUrat);
+        label_HasilGD.setText("Hasil Gula Darah: " + hasilGlukosa);
+        label_HasilK.setText("Hasil Kolesterol: " + hasilKolesterol);
+        label_HasilRJ.setText("Resiko Jantung: " + hasilResikoJantung);
+        label_HasilTD.setText("Hasil Tensi: " + hasilTensi);
+        total_kol_user1.setText(totalKol);
+        
+        /*
+        if (targetRowTabel < model.getRowCount()) {
+        // Column 0: "Tanggal"
+        model.setValueAt(tanggalMCU_USER, targetRowTabel, 0);
+
+        // Column 1: "Nama" (String)
+        model.setValueAt(nama, targetRowTabel, 1);
+
+        // Column 2: "Umur" (Integer)
+        model.setValueAt(umur, targetRowTabel, 2); // umur is an int, autoboxed to Integer
+
+        // Column 3: "Tanggal Lahir" (String)
+        model.setValueAt(tglLahir_USER, targetRowTabel, 3);
+
+        // Column 4: "Tekanan.D" (String)
+        model.setValueAt(hasilTensi, targetRowTabel, 4);
+
+        // Column 5: "Asam Urat" (String)
+        model.setValueAt(hasilAsamUrat, targetRowTabel, 5);
+
+        // Column 6: "Gula Darah" (Integer)
+        model.setValueAt(hasilGlukosa, targetRowTabel, 6); // nilai_glukosa is an int
+
+        // Column 7: "Resiko Jantung" (String)
+        model.setValueAt(hasilResikoJantung, targetRowTabel, 7); // Assuming hasilResikoJantung is calculated
+
+        // Column 8: "Kolesterol" (Integer)
+        model.setValueAt(totalKol, targetRowTabel, 8);
+    }
+        */ //CARA 1 add data di tabel
+        
+        Object[] newDataPasien = {
+        tanggalMCU_USER,    // Tanggal (String)
+        nama,                    // Nama (String)
+        umur,                    // Umur (Integer)
+        GolDar,                 // goldar
+        tglLahir_USER,      // Tanggal Lahir (String)
+        hasilTensi,        // Tekanan.D (String)
+        hasilAsamUrat,        // Asam Urat (String)
+        hasilGlukosa,           // Gula Darah (Integer)
+        hasilResikoJantung,      // Resiko Jantung (String)
+        hasilKolesterol         // Kolesterol (Integer)
+};
+
+        model.addRow(newDataPasien);
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void diastol_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_diastol_userActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_diastol_userActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tabel_User.getModel();
+
+        // cari index selected row
+        int selectedRowIndex = tabel_User.getSelectedRow();
+
+        // check
+        if (selectedRowIndex != -1) { // -1 means no row is selected
+            // Optional ask user apakah YAKINN BOSSSS?
+            /*int confirmation = javax.swing.JOptionPane.showConfirmDialog(
+                    null, // Or your parent frame/component
+                    "Anda yakin ingin menghapus data pasien ini?",
+                    "Konfirmasi Hapus",
+                    javax.swing.JOptionPane.YES_NO_OPTION,
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+
+            if (confirmation == javax.swing.JOptionPane.YES_OPTION) {
+              */  // If user confirms, remove the row from the model
+                model.removeRow(selectedRowIndex);
+          //  }
+        } else {
+            // If no row is selected, inform the user
+            javax.swing.JOptionPane.showMessageDialog(
+                    null, // Or your parent frame/component
+                    "Silakan pilih baris data yang ingin dihapus terlebih dahulu.",
+                    "Tidak Ada Baris Terpilih",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cekJantungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cekJantungActionPerformed
+        // TODO add your handling code here:
+       
+                
+        int HDL_user = Integer.parseInt(hdl_user.getText());
+        int LDL_user = Integer.parseInt(ldl_user.getText());
+      
+        String GolDar = gol_user.getSelectedItem().toString();
+              
+        boolean isLaki = islaki_user.isSelected();
+        
+        ResikoJantung data2ResikoJantung = new ResikoJantung(GolDar, isLaki, HDL_user, LDL_user);
+        String hasilResikoJantung = data2ResikoJantung.kriteria();
+        
+        String textOutput = "<html>Resiko Jantung: " + hasilResikoJantung +
+                    "<br>Rasio LDL/HDL (Total/HDL): " + data2ResikoJantung.getTotal() + "/" + data2ResikoJantung.getHDL() +
+                    "<br?Rasio LDL/HDL (LDL/HDL): " + data2ResikoJantung.getLDL() + "/" + data2ResikoJantung.getHDL() + "<html>";
+        hasil_individual.setText(textOutput);
+    }//GEN-LAST:event_cekJantungActionPerformed
+
+    private void cekKolesterolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cekKolesterolActionPerformed
+        // TODO add your handling code here:
+        int HDL_user = Integer.parseInt(hdl_user.getText());
+        int LDL_user = Integer.parseInt(ldl_user.getText());
+      
+        String GolDar = gol_user.getSelectedItem().toString();
+              
+        boolean isLaki = islaki_user.isSelected();
+        
+        kolesterol dataKolesterol = new kolesterol(GolDar, isLaki, HDL_user, LDL_user);
+        String hasilKolesterol = dataKolesterol.kriteria();
+        dataKolesterol.setTotal();
+        String totalKol = Integer.toString(dataKolesterol.getTotal());
+        String textOutput = "<html> Total Kolestrol: " + totalKol +"<br>" +"Result: " + hasilKolesterol + "<html>";
+        hasil_individual.setText(textOutput);
+        
+    }//GEN-LAST:event_cekKolesterolActionPerformed
+
+    private void cekGlukosaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cekGlukosaActionPerformed
+// TODO add your handling code here:
+
+        String GolDar = gol_user.getSelectedItem().toString();
+        int  nilai_glukosa = Integer.parseInt(gula_user.getText());
+        
+        boolean isLaki = islaki_user.isSelected();
+        boolean isPuasa = isPuasa_user.isSelected();
+        
+        
+        glukosa dataGlukosa = new glukosa(GolDar, isLaki, nilai_glukosa, isPuasa);
+        String hasilGlukosa = dataGlukosa.kriteria();
+        
+        hasil_individual.setText("Result: " + hasilGlukosa);
+    }//GEN-LAST:event_cekGlukosaActionPerformed
+
+    private void cekTensiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cekTensiActionPerformed
+        // TODO add your handling code here:
+        int diastol = Integer.parseInt(diastol_user.getText());
+        int sistol = Integer.parseInt(sistol_user.getText());
+        
+        tensi dataTensi = new tensi(sistol, diastol);
+        String hasilTensi = dataTensi.kriteria();
+        
+         hasil_individual.setText("Result: " + hasilTensi);
+    }//GEN-LAST:event_cekTensiActionPerformed
+
+
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
+        
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -419,7 +705,13 @@ public class GUI_TESDarah extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(GUI_TESDarah.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        try {
+           // UIManager.setLookAndFeel( new FlatIntelliJLaf() );
+            UIManager.setLookAndFeel( new FlatDarkLaf() );
+        } catch( Exception ex ) {
+            System.err.println( "Failed to initialize LaF" );
+        }
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -430,19 +722,26 @@ public class GUI_TESDarah extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField asamur_user;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton cekGlukosa;
+    private javax.swing.JButton cekJantung;
+    private javax.swing.JButton cekKolesterol;
+    private javax.swing.JButton cekTensi;
     private javax.swing.JTextField diastol_user;
     private javax.swing.JComboBox<String> gol_user;
     private javax.swing.JTextField gula_user;
-    private javax.swing.JLabel hasil_user;
+    private javax.swing.JLabel hasil_individual;
     private javax.swing.JTextField hdl_user;
     private javax.swing.JCheckBox isPuasa_user;
     private javax.swing.JRadioButton islaki_user;
     private javax.swing.JRadioButton isperempuan_user;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -451,10 +750,18 @@ public class GUI_TESDarah extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel kol_tot;
+    private javax.swing.JLabel label_HasilAU;
+    private javax.swing.JLabel label_HasilGD;
+    private javax.swing.JLabel label_HasilK;
+    private javax.swing.JLabel label_HasilRJ;
+    private javax.swing.JLabel label_HasilTD;
     private javax.swing.JTextField ldl_user;
     private javax.swing.JTextField nama_user;
     private javax.swing.JTextField sistol_user;
+    private javax.swing.JTable tabel_User;
+    private com.toedter.calendar.JDateChooser tanggalLahir_user;
     private com.toedter.calendar.JDateChooser tanggalMCU;
     private javax.swing.JLabel total_kol_user1;
     private javax.swing.JTextField umur_user;

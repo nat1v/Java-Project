@@ -10,6 +10,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+
+import java.sql.*;
+import java.sql.DriverManager;
+
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author 0xr00t
@@ -19,6 +31,19 @@ public class GUI_TESDarah extends javax.swing.JFrame {
     /**
      * Creates new form GUI_TESDarah
      */
+    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://localhost/pasien";
+    static final String USER = "root";
+    static final String PASS = "makandewa";
+
+    // Menyiapkan objek yang diperlukan untuk mengelola database
+    Connection conn = null;
+    Statement stmt = null;
+    ResultSet rs = null;
+    
+    static final String TABLE_NAME = "datapasien";
+    
+    
     public GUI_TESDarah() {
         initComponents();
         
@@ -36,6 +61,8 @@ public class GUI_TESDarah extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         nama_user = new javax.swing.JTextField();
@@ -79,6 +106,7 @@ public class GUI_TESDarah extends javax.swing.JFrame {
         cekGlukosa = new javax.swing.JButton();
         cekTensi = new javax.swing.JButton();
         hasil_individual = new javax.swing.JLabel();
+        GetDataButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tes Darah");
@@ -104,6 +132,7 @@ public class GUI_TESDarah extends javax.swing.JFrame {
 
         jLabel5.setText("Jenis Kelamin");
 
+        buttonGroup1.add(islaki_user);
         islaki_user.setText("Laki laki");
         islaki_user.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,6 +140,7 @@ public class GUI_TESDarah extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(isperempuan_user);
         isperempuan_user.setText("Perempuan");
 
         jLabel6.setText("Tekanan Darah");
@@ -166,7 +196,7 @@ public class GUI_TESDarah extends javax.swing.JFrame {
 
         kol_tot.setText("Kolesterol Total: ");
 
-        jButton1.setText("Hasil/Add");
+        jButton1.setText("Hasil/Add/Updt");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -190,14 +220,14 @@ public class GUI_TESDarah extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Tanggal", "Nama", "Umur", "Golongan", "Tanggal Lahir", "Tekanan.D", "Asam Urat", "Gula Darah", "Resiko Jantung", "Kolesterol"
+                "ID", "Tanggal", "Nama", "Kelamin", "Umur", "Golongan", "Tanggal Lahir", "Tekanan.D", "Asam Urat", "Gula Darah", "Resiko Jantung", "Kolesterol"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -249,6 +279,13 @@ public class GUI_TESDarah extends javax.swing.JFrame {
 
         hasil_individual.setText("...");
 
+        GetDataButton.setText("Ambil Data");
+        GetDataButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GetDataButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -265,13 +302,18 @@ public class GUI_TESDarah extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(total_kol_user1)
-                            .addComponent(jButton2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cekKolesterol)
-                                    .addComponent(cekTensi))
-                                .addGap(93, 93, 93)
-                                .addComponent(hasil_individual))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jButton2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(GetDataButton))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(cekKolesterol)
+                                        .addComponent(cekTensi))
+                                    .addGap(93, 93, 93)
+                                    .addComponent(hasil_individual))))
+                        .addContainerGap(857, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -323,20 +365,20 @@ public class GUI_TESDarah extends javax.swing.JFrame {
                                         .addComponent(islaki_user)
                                         .addGap(34, 34, 34)
                                         .addComponent(isperempuan_user)))))
-                        .addGap(27, 27, 27)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(163, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(93, 93, 93))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(tanggalMCU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(tanggalMCU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nama_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
@@ -400,10 +442,8 @@ public class GUI_TESDarah extends javax.swing.JFrame {
                             .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ldl_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_HasilK)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(kol_tot)
                     .addComponent(total_kol_user1))
@@ -420,10 +460,11 @@ public class GUI_TESDarah extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addComponent(hasil_individual)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(GetDataButton))
                 .addGap(24, 24, 24))
         );
 
@@ -466,7 +507,7 @@ public class GUI_TESDarah extends javax.swing.JFrame {
         // kolesterol v
         // resikojantung v
         String nama = nama_user.getText();
-        int umur = Integer.parseInt(umur_user.getText());
+        int umur = Integer.parseInt(umur_user.getText().trim());
         String GolDar = gol_user.getSelectedItem().toString();
         
         
@@ -476,7 +517,7 @@ public class GUI_TESDarah extends javax.swing.JFrame {
         DefaultTableModel model = (javax.swing.table.DefaultTableModel) tabel_User.getModel();
         Date tanggalDipilih = tanggalMCU.getDate();
         Date tglLahir_user = tanggalLahir_user.getDate();
-        
+        int idCounter = model.getRowCount();
         // format formats:
         // "yyyy-MM-dd" -> 2025-05-24 (Good for databases, international standard)
         // "dd-MM-yyyy" -> 24-05-2025 (Common in many regions)
@@ -527,40 +568,19 @@ public class GUI_TESDarah extends javax.swing.JFrame {
         label_HasilTD.setText("Hasil Tensi: " + hasilTensi);
         total_kol_user1.setText(totalKol);
         
-        /*
-        if (targetRowTabel < model.getRowCount()) {
-        // Column 0: "Tanggal"
-        model.setValueAt(tanggalMCU_USER, targetRowTabel, 0);
-
-        // Column 1: "Nama" (String)
-        model.setValueAt(nama, targetRowTabel, 1);
-
-        // Column 2: "Umur" (Integer)
-        model.setValueAt(umur, targetRowTabel, 2); // umur is an int, autoboxed to Integer
-
-        // Column 3: "Tanggal Lahir" (String)
-        model.setValueAt(tglLahir_USER, targetRowTabel, 3);
-
-        // Column 4: "Tekanan.D" (String)
-        model.setValueAt(hasilTensi, targetRowTabel, 4);
-
-        // Column 5: "Asam Urat" (String)
-        model.setValueAt(hasilAsamUrat, targetRowTabel, 5);
-
-        // Column 6: "Gula Darah" (Integer)
-        model.setValueAt(hasilGlukosa, targetRowTabel, 6); // nilai_glukosa is an int
-
-        // Column 7: "Resiko Jantung" (String)
-        model.setValueAt(hasilResikoJantung, targetRowTabel, 7); // Assuming hasilResikoJantung is calculated
-
-        // Column 8: "Kolesterol" (Integer)
-        model.setValueAt(totalKol, targetRowTabel, 8);
-    }
-        */ //CARA 1 add data di tabel
-        
+       
+        String Kelamin = "";
+        if (isLaki){
+            Kelamin = "L";
+        }
+        else{
+            Kelamin = "P";
+        }
         Object[] newDataPasien = {
+        idCounter,
         tanggalMCU_USER,    // Tanggal (String)
         nama,                    // Nama (String)
+        Kelamin,
         umur,                    // Umur (Integer)
         GolDar,                 // goldar
         tglLahir_USER,      // Tanggal Lahir (String)
@@ -572,7 +592,89 @@ public class GUI_TESDarah extends javax.swing.JFrame {
 };
 
         model.addRow(newDataPasien);
+        Connection updateConn = null;
         
+        
+        try {
+        Class.forName(JDBC_DRIVER);
+        conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        PreparedStatement pstmt = null;
+        // Note: Column names with spaces need backticks ` `
+        // Ensure TABLE_NAME is correct (e.g., "datapasien")
+        String sql = "INSERT INTO `" + TABLE_NAME + "` (`Tanggal MCU`, `Nama`, `Kelamin`, `Umur`, `Golongan`, `Tanggal Lahir`, " +
+                     "`Tekanan Darah`, `Asam Urat`, `Gula Darah`, `Resiko Jantung`, `Kolesterol`" + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?" + ")";
+
+        pstmt = conn.prepareStatement(sql);
+
+        // Set parameters for the UPDATE statement
+        pstmt.setString(1, tanggalMCU_USER); // Or use java.sql.Date if DB column is DATE
+        pstmt.setString(2, nama);
+        pstmt.setString(3, Kelamin);
+        pstmt.setInt(4, umur);
+        pstmt.setString(5, GolDar);
+        pstmt.setString(6, tglLahir_USER); // Or use java.sql.Date
+
+        pstmt.setString(7, hasilTensi);
+        pstmt.setString(8, hasilAsamUrat);
+        pstmt.setString(9, hasilGlukosa);
+        pstmt.setString(10, hasilResikoJantung);
+        pstmt.setString(11, hasilKolesterol);
+        //pstmt.setInt(, idCounter); // WHERE clause for id_pasien
+        // Set parameters for raw data values (if you're updating them)
+    //    pstmt.setInt(12, nilai_glukosa); // Assuming this maps to `NilaiGlukosa` in DB
+     //   pstmt.setBoolean(13, isPuasa);   // Assuming this maps to `Puasa`
+      //  pstmt.setInt(14, HDL_user);      // `HDL`
+       // pstmt.setInt(15, LDL_user);      // `LDL`
+      //  pstmt.setInt(16, dataKolesterol.getTotal()); // `KolesterolTotal`
+
+        
+
+        int rowsAffected = pstmt.executeUpdate();
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(this, "Data pasien berhasil diperbarui!", "Update Success", JOptionPane.INFORMATION_MESSAGE);
+
+            // --- 4. Update JTable ---
+            int selectedRow = tabel_User.getSelectedRow(); // Re-get selected row, though it should be the same
+            if (selectedRow != -1) {
+               // DefaultTableModel model = (DefaultTableModel) tabel_User.getModel();
+                model.setValueAt(tanggalMCU_USER, selectedRow, 1); // Update Tanggal MCU
+                model.setValueAt(nama, selectedRow, 2);                // Update Nama
+                model.setValueAt(isLaki, selectedRow, 3);              // Update L/P (Boolean) or KelaminDB (String)
+                model.setValueAt(umur, selectedRow, 4);                // Update Umur
+                model.setValueAt(GolDar, selectedRow, 5);              // Update Golongan
+                model.setValueAt(tglLahir_USER, selectedRow, 6);   // Update Tanggal Lahir
+                model.setValueAt(hasilTensi, selectedRow, 7);          // Update Hasil Tensi
+                model.setValueAt(hasilAsamUrat, selectedRow, 8);       // Update Hasil Asam Urat
+                model.setValueAt(hasilGlukosa, selectedRow, 9);        // Update Hasil Gula Darah
+                model.setValueAt(hasilResikoJantung, selectedRow, 10); // Update Hasil Resiko Jantung
+                model.setValueAt(hasilKolesterol, selectedRow, 11);    // Update Hasil Kolesterol
+                // The ID (column 0) should not change as it's the primary key.
+            }
+            // Optionally, refresh the whole table from DB after update
+            // loadDataFromDB();
+        } else {
+            JOptionPane.showMessageDialog(this, "Gagal memperbarui data pasien. ID tidak ditemukan atau data sama.", "Update Failed", JOptionPane.WARNING_MESSAGE);
+        }
+
+    } catch (ClassNotFoundException e) {
+        JOptionPane.showMessageDialog(this, "MySQL JDBC Driver not found.", "Driver Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Database error during update: " + e.getMessage(), "DB Update Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    } catch (Exception e) { // Catch any other unexpected errors
+        JOptionPane.showMessageDialog(this, "An unexpected error occurred during update: " + e.getMessage(), "Application Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+    finally {
+        try {
+    //        if (pstmt != null) pstmt.close();
+            if (updateConn != null) updateConn.close();
+        } catch (SQLException ex) {
+            // ex.printStackTrace();
+        }
+            }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -667,8 +769,8 @@ public class GUI_TESDarah extends javax.swing.JFrame {
 
     private void cekTensiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cekTensiActionPerformed
         // TODO add your handling code here:
-        int diastol = Integer.parseInt(diastol_user.getText());
-        int sistol = Integer.parseInt(sistol_user.getText());
+        int diastol = Integer.parseInt(diastol_user.getText().trim());
+        int sistol = Integer.parseInt(sistol_user.getText().trim());
         
         tensi dataTensi = new tensi(sistol, diastol);
         String hasilTensi = dataTensi.kriteria();
@@ -676,6 +778,167 @@ public class GUI_TESDarah extends javax.swing.JFrame {
          hasil_individual.setText("Result: " + hasilTensi);
     }//GEN-LAST:event_cekTensiActionPerformed
 
+    private void GetDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GetDataButtonActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tabel_User.getModel();
+        model.setRowCount(0); // Clear existing table data
+        
+        
+            
+        try {
+            
+            // register driver yang akan dipakai
+            Class.forName(JDBC_DRIVER);
+            
+            // buat koneksi ke database
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            
+            // buat objek statement
+            stmt = conn.createStatement();
+            
+            // buat query ke database
+            String sql = "SELECT `id_pasien`, `Tanggal MCU`, `Nama`, `Kelamin`, `Umur`, `Golongan`, `Tanggal Lahir`, `Tekanan Darah`, `Asam Urat`, `Gula Darah`, `Resiko Jantung`, `Kolesterol` FROM `" + TABLE_NAME + "`";
+            rs = stmt.executeQuery(sql);
+            // eksekusi query dan simpan hasilnya di obj ResultSet
+          
+            /*
+            rs = stmt.executeQuery(sql);
+            
+            // tampilkan hasil query
+           
+     
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        
+        
+            // buat koneksi ke database
+            
+        /* ///////////////////////////////////////
+        try {
+            stmt = conn.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(GUI_TESDarah.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String sql = "SELECT id_pasien, Tanggal MCU, Nama, Kelamin, Umur, Golongan, Tanggal Lahir, Tekanan Darah, Asam Urat, Gula Darah, Resiko Jantung, Kolesterol FROM " + TABLE_NAME;
+        try {
+            rs = stmt.executeQuery(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(GUI_TESDarah.class.getName()).log(Level.SEVERE, null, ex);
+        }/////////////////////////////////////////////
+        
+        try {
+        int id_PasienDB = rs.getInt("id_pasien");
+        var tglMcuSQL = rs.getString("Tanggal MCU");
+        String namaDb = rs.getString("Nama");
+        String jenisKelaminDb = rs.getString("Kelamin");
+        int umurDb = rs.getInt("Umur");
+        String golDb = rs.getString("GolonganDarah");
+        var tglLahirSQL = rs.getDate("Tanggal Lahir");
+        
+        String hasilTensiDb = rs.getString("Tekanan Darah");
+        String hasilAsamUratDb = rs.getString("Asam Urat");
+        String hasilGlukosaDb = rs.getString("Gula Darah"); // This is String (kriteria)
+        String hasilResikoJantungDb = rs.getString("Resiko Jantung");
+        String hasilKolesterolDb = rs.getString("Kolesterol"); // This is String (kriteria)
+
+        // Ensure your JTable column types match. L/P is Boolean. Gula Darah and Kolesterol should be String.
+        Object[] rowData = {
+            id_PasienDB,
+            tglMcuSQL,
+            namaDb,
+            jenisKelaminDb, // JTable expects Boolean for L/P
+            umurDb,
+            golDb,
+            tglLahirSQL,
+            hasilTensiDb,
+            hasilAsamUratDb,
+            hasilGlukosaDb,    // Corresponds to JTable column 8 (Gula Darah)
+            hasilResikoJantungDb,
+            hasilKolesterolDb  // Corresponds to JTable column 10 (Kolesterol)
+        };
+        model.addRow(rowData);
+        
+        
+        } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, "Error loading data from database: " + e.getMessage(), "DB Load Error", JOptionPane.ERROR_MESSAGE);
+               // e.printStackTrace();
+                // jLabel1.setText("Tanggal MCU (Error Loading)");
+            } finally {
+                try {
+                    if (rs != null) rs.close();
+                    if (stmt != null) stmt.close();
+                    if (conn != null) conn.close();
+                } catch (SQLException ex) {
+                  //  ex.printStackTrace();
+                }
+            }
+    }//GEN-LAST:event_GetDataButtonActionPerformed
+        */
+            while (rs.next()) { 
+                
+            int id_PasienDB = rs.getInt("id_pasien");
+            String tglMcuSQL = rs.getString("Tanggal MCU");
+            String namaDb = rs.getString("Nama");
+            String jenisKelaminDb = rs.getString("Kelamin");
+            int umurDb = rs.getInt("Umur");
+            // Assuming your database column name is "Golongan".
+            // If it's "GolonganDarah" (as in some previous examples), use that.
+            String golDb = rs.getString("Golongan");
+            String tglLahirSQL = rs.getString("Tanggal Lahir"); // If DB stores as VARCHAR
+
+            String hasilTensiDb = rs.getString("Tekanan Darah");
+            String hasilAsamUratDb = rs.getString("Asam Urat");
+            String hasilGlukosaDb = rs.getString("Gula Darah");
+            String hasilResikoJantungDb = rs.getString("Resiko Jantung");
+            String hasilKolesterolDb = rs.getString("Kolesterol");
+
+            Object[] rowData = {
+                id_PasienDB,
+                tglMcuSQL,
+                namaDb,
+                
+                jenisKelaminDb, // Or keep as String if JTable column is String
+                umurDb,
+                golDb,
+                tglLahirSQL,
+                hasilTensiDb,
+                hasilAsamUratDb,
+                hasilGlukosaDb,
+                hasilResikoJantungDb,
+                hasilKolesterolDb
+            };
+            model.addRow(rowData);
+        }
+
+        // if (model.getRowCount() == 0) {
+        //     JOptionPane.showMessageDialog(this, "No data found in the database.", "Info", JOptionPane.INFORMATION_MESSAGE);
+        // }
+        // jLabel1.setText("Tanggal MCU"); // Reset status label
+
+    } catch (ClassNotFoundException e) {
+        JOptionPane.showMessageDialog(this, "MySQL JDBC Driver not found. Please ensure it's in your project's classpath.\n" + e.getMessage(), "Driver Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error loading data from database: " + e.getMessage(), "DB Load Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace(); // Important for debugging SQL-specific issues
+        // jLabel1.setText("Tanggal MCU (Error Loading)");
+    } catch (Exception e) { // Catch any other unexpected errors
+        JOptionPane.showMessageDialog(this, "An unexpected error occurred: " + e.getMessage(), "Application Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    } finally {
+        // 7. Close resources in a finally block
+        try {
+            if (rs != null) rs.close();
+            if (stmt != null) stmt.close();
+            if (conn != null) conn.close();
+        } catch (SQLException ex) {
+            
+        }
+    }
+}
+            
 
     
     /**
@@ -721,8 +984,11 @@ public class GUI_TESDarah extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton GetDataButton;
     private javax.swing.JTextField asamur_user;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JButton cekGlukosa;
     private javax.swing.JButton cekJantung;
     private javax.swing.JButton cekKolesterol;
